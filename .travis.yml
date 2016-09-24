@@ -10,7 +10,7 @@ before_install:
 
 
 before_script:
-  - ./autogen.sh
+  - ./bootstrap --prefix=/usr
   - ./configure --prefix=/usr
   - make -j4
 

@@ -4,7 +4,7 @@ before_install:
   - sudo apt-get update -q
   - sudo apt-get install -qq apt-transport-https python-docutils
   - wget -q https://repo.varnish-cache.org/pkg/5.0.0/varnish_5.0.0-1_amd64.deb https://repo.varnish-cache.org/pkg/5.0.0/varnish-dev_5.0.0-1_amd64.deb
-  - dpkg -i varnish_5.0.0-1_amd64.deb varnish-dev_5.0.0-1_amd64.deb
+  - sudo dpkg -i varnish_5.0.0-1_amd64.deb varnish-dev_5.0.0-1_amd64.deb
 
 
 before_script:

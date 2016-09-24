@@ -6,7 +6,7 @@ vmod_example
 Varnish Example Module
 ----------------------
 
-:Date: 2015-03-03
+:Date: 2016-09-24
 :Version: 1.0
 :Manual section: 3
 
@@ -53,13 +53,12 @@ the necessary paths.
 
 Usage::
 
- ./autogen.sh
- ./configure
+ ./bootstap.sh
 
 If you have installed Varnish to a non-standard directory, call
-``autogen.sh`` and ``configure`` with ``PKG_CONFIG_PATH`` pointing to
-the appropriate path. For instance, when varnishd configure was called
-with ``--prefix=$PREFIX``, use
+``bootstrap`` with ``PKG_CONFIG_PATH`` pointing to the appropriate
+path. For instance, when varnishd configure was called with
+``--prefix=$PREFIX``, use
 
  PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig
  export PKG_CONFIG_PATH
@@ -74,10 +73,11 @@ Make targets:
 Installation directories
 ------------------------
 
-By default, the vmod ``configure`` script installs the built vmod in
-the same directory as Varnish, determined via ``pkg-config(1)``. The
-vmod installation directory can be overridden by passing the
-``VMOD_DIR`` variable to ``configure``.
+By default, the vmod ``configure`` scritpt (called from
+``bootstrap``) installs the built vmod in the same directory as
+Varnish, determined via ``pkg-config(1)``. The vmod installation
+directory can be overridden by passing the ``VMOD_DIR`` variable to
+``configure``.
 
 Other files like man-pages and documentation are installed in the
 locations determined by ``configure``, which inherits its default
@@ -106,5 +106,5 @@ COMMON PROBLEMS
 * Incompatibilities with different Varnish Cache versions
 
   Make sure you build this vmod against its correspondent Varnish Cache version.
-  For instance, to build against Varnish Cache 4.0, this vmod must be built from
-  branch 4.0.
+  For instance, to build against Varnish Cache 5.0, this vmod must be built from
+  branch 5.0.

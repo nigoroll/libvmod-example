@@ -2,10 +2,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#define __USE_GNU
+#include <dlfcn.h>
 
 #include "cache/cache.h"
 #include "vrt.h"
 #include "vcl.h"
+#include "vqueue.h"
+#include "vapi/vsl.h"
 
 #include "vtim.h"
 #include "vcc_example_if.h"
@@ -83,4 +89,35 @@ vmod_hello(VRT_CTX, VCL_STRING name)
 	/* Update work space with what we've used */
 	WS_Release(ctx->ws, v);
 	return (p);
+}
+
+struct myvcl {
+	unsigned                magic;
+#define VCL_MAGIC               0x214188f2
+	VTAILQ_ENTRY(vcl)       list;
+	void                    *dlh;
+};
+
+
+VCL_STRING
+vmod_call(VRT_CTX, VCL_STRING sym)
+{
+	vcl_func_f	*func;
+	struct myvcl	*vcl;
+	const int	l = 64;
+	char		buf[l];
+	const char	*prefix = "VGC_function_";
+
+	CAST_OBJ_NOTNULL(vcl, (void *)ctx->vcl, VCL_MAGIC);
+
+	assert (l > strlen(prefix));
+	strcpy(buf, prefix);
+	strncat(buf, sym, l - strlen(prefix) - 1);
+	sym = buf;
+	errno = 0;
+	func = dlsym(vcl->dlh, sym);
+	VSL(SLT_Debug, 0, "example.call: sub %s -> %p", sym, func);
+	if (func)
+		func(ctx);
+	return(strerror(errno));
 }

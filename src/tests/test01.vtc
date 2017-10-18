@@ -13,9 +13,15 @@ varnish v1 -vcl+backend {
 		std.log(example.info());
 	}
 
+	sub t {
+	    set resp.http.hello = example.hello("World");
+	    set resp.http.info = example.info();
+	}
 	sub vcl_deliver {
-		set resp.http.hello = example.hello("World");
-		set resp.http.info = example.info();
+	    std.log("call errno " + example.call("t"));
+	    return (deliver);
+	    # dummy calls to make vcc happy
+	    call t;
 	}
 } -start
 

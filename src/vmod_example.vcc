@@ -28,3 +28,5 @@ $Function STRING hello(STRING)
 
 The different functions provided by the VMOD should also have their own
 embedded documentation. This section is for the hello() function.
+
+$Function STRING call(STRING)
